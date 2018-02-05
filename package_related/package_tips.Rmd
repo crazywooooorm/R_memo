@@ -1,0 +1,11 @@
+---
+title: "Let's Package"
+author: "Xinghao"
+date: "February 5, 2018"
+output: html_document
+---
+
+## Package Intro
+
+In development, we shall use devtools::load_all() to access to our developing
+package.
