@@ -180,6 +180,29 @@ str(g2())
 ```
 
 
+```{r}
+# An example of tricky environment
+fun1 <- function() x
+
+fun2 <- function() {
+  x <- 1
+  fun1()
+}
+
+fun3 <- function() {
+  x <- 1
+  environment(fun1) <- environment()
+  fun1()
+}
+
+x <- 3
+# -- original environment
+fun2()
+# -- changed environment
+fun3()
+
+```
+
 Namespaces
 
 When overwrite some functions in global environment, it doesn't affect some
