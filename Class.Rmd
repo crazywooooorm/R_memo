@@ -1,0 +1,54 @@
+---
+title: "Class"
+author: "Xinghao"
+date: "February 8, 2018"
+output: html_document
+---
+
+## S3 Class
+
+A object can have several attributes, one of the attributes is "class". S3 methods 
+rely on the class of objects.
+
+```{r}
+# -- ways to set class to object
+x <- "tt"
+attr(x, "class") <- "foo"
+x <- structure("tt", class = "foo")
+class(x) <- "foo"
+
+# -- simple example of generic functions
+x <- structure("tt", class = letters)
+bar <- function(x) UseMethod("bar", x)
+bar.a <- function(x) "a"
+bar.z <- function(x) "z"
+bar(x)
+# -- check classes of a generic function
+methods("bar")
+
+```
+
+
+```{r}
+# -- use structure to specify order of classes
+x <- structure("tt", class = c("c", "b"))
+
+# -- usage of NextMethod()
+bar.c <- function(x) {
+  class(x) <- "a"
+  NextMethod()
+} 
+bar.b <- function(x) "b"
+
+bar(x)
+```
+
+The "NextMethod" follow the class chain in Global environment, so manually changing 
+the class within the generic function will not change the result.
+
+
+
+
+
+
+
