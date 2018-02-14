@@ -1,0 +1,31 @@
+---
+title: "rlang"
+author: "Xinghao"
+date: "February 13, 2018"
+output: html_document
+---
+
+## memo on common rlang functions
+
+### quosure related
+
+```{r}
+# -- quo() always keeps the environment where it is run
+# base::eval() doesn't trace back, but rlang::eval_tidy() trace to quosure's environment
+fn <- function() {
+  foobar <- 10
+  quo(foobar * 2)
+}
+
+quo <- fn()
+# -- eval in base
+eval(quo)
+# -- eval in rlang
+rlang::eval_tidy(quo)
+
+```
+
+
+
+
+
