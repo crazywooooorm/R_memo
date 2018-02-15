@@ -10,11 +10,12 @@ output: html_document
 ### quosure related
 
 ```{r}
+library(rlang)
 # -- quo() always keeps the environment where it is run
 # base::eval() doesn't trace back, but rlang::eval_tidy() trace to quosure's environment
 fn <- function() {
   foobar <- 10
-  quo(foobar * 2)
+  rlang::quo(foobar * 2)
 }
 
 quo <- fn()
@@ -22,8 +23,31 @@ quo <- fn()
 eval(quo)
 # -- eval in rlang
 rlang::eval_tidy(quo)
+```
+
+```{r}
+# Difference between expression (symbol) and quosure (language)
 
 ```
+
+### environment manipulation
+
+```{r, include = T}
+# -- give a child environment for current environment
+rlang::env()
+# -- give a child environment for specific environment
+rlang::child_env("base")
+# -- give a child environment for empty environment
+rlang::new_environment()
+
+# -- force a new environment to a expression or quosure
+expr <- quote(mtcars) # quote() returns a expr, rlang::quo() returns quosure
+env <- rlang::as_env("datasets") # get environment
+quo <- rlang::new_quosure(expr, env)
+quo
+
+```
+
 
 
 
